@@ -17,9 +17,17 @@ const SimpleInput = (props) => {
     const nameInputChangeHandler = e => {
         setEnteredName(e.target.value)
 
+        if (enteredName.trim() === ''){
+            setEnteredNameIsValid(false)
+            return
+        }
+
     }
 
+    const nameInputBlurHandler = e => {
+        setEnteredNameTouched(true)
 
+    }
 
     const formSubmissionHandler = e => {
         //do not send again http request on submit
@@ -50,7 +58,7 @@ const SimpleInput = (props) => {
         <form onSubmit={formSubmissionHandler}>
             <div className={nameInputClasses}>
                 <label htmlFor='name'>Your Name</label>
-                <input ref={nameInputRef} type='text' id='name' onChange={nameInputChangeHandler} value={enteredName}/>
+                <input ref={nameInputRef} type='text' id='name' onChange={nameInputChangeHandler} onBlur={nameInputBlurHandler} value={enteredName}/>
                 {nameInputIsInvalid  && <p className={'error-text'}>can not be empty</p>}
             </div>
             <div className="form-actions">
